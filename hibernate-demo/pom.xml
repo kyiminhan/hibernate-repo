@@ -9,8 +9,8 @@
 	<name>hibernate-demo</name>
 
 	<modules>
+		<module>hibernate-demo-000-common</module>
 		<module>hibernate-demo-001-hello-world</module>
-		<module>hibernate-demo-002-get-fetch</module>
 	</modules>
 
 	<properties>
