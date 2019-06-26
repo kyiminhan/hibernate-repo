@@ -28,9 +28,12 @@ public class App {
 	 * @param args the arguments
 	 */
 	public static void main(final String[] args) {
-		final Session sessionOne = HibernateUtil.getSessionFactory().openSession();
+
+		App.log.info("*********************************** START main() method " + App.class);
 
 		DBUtil.getInstance().deleteEmployeeEntity();
+
+		final Session sessionOne = HibernateUtil.getSessionFactory().openSession();
 
 		sessionOne.beginTransaction();
 
@@ -59,5 +62,7 @@ public class App {
 		App.log.info("@@@@@ Equal two object : " + (employeeObj1 == employeeObj2));
 
 		HibernateUtil.shutdown();
+
+		App.log.info("*********************************** END main() method " + App.class);
 	}
 }

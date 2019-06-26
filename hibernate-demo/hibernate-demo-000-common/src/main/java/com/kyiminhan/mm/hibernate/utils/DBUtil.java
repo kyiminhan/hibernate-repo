@@ -1,12 +1,10 @@
 package com.kyiminhan.mm.hibernate.utils;
 
-import java.util.List;
-
+import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.Root;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.hibernate.Session;
 
 import com.kyiminhan.mm.hibernate.entity.EmployeeEntity;
@@ -50,20 +48,17 @@ public class DBUtil {
 	public void deleteEmployeeEntity() {
 
 		DBUtil.log.info("*********************************** START deleteEmployeeEntity() method " + this.getClass());
+
 		final Session session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();
 
-		final CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-		final CriteriaQuery<EmployeeEntity> criteriaQuery = criteriaBuilder.createQuery(EmployeeEntity.class);
-		final Root<EmployeeEntity> root = criteriaQuery.from(EmployeeEntity.class);
-		criteriaQuery.select(root);
-		final List<EmployeeEntity> list = session.createQuery(criteriaQuery).getResultList();
-
-		if (!CollectionUtils.isEmpty(list)) {
-			list.forEach(emp -> session.delete(emp));
-		}
-
-		session.getTransaction().commit();
+		final EntityManager em = session.getEntityManagerFactory().createEntityManager();
+		em.getTransaction().begin();
+		final CriteriaBuilder cb = em.getCriteriaBuilder();
+		final CriteriaDelete<EmployeeEntity> criteriaDelete = cb.createCriteriaDelete(EmployeeEntity.class);
+		@SuppressWarnings("unused")
+		final Root<EmployeeEntity> root = criteriaDelete.from(EmployeeEntity.class);
+		em.createQuery(criteriaDelete).executeUpdate();
+		em.getTransaction().commit();
 
 		DBUtil.log.info("*********************************** END deleteEmployeeEntity() method " + this.getClass());
 

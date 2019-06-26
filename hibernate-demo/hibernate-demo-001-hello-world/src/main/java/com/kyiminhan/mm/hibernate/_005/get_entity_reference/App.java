@@ -62,7 +62,7 @@ public class App {
 		session.getTransaction().commit();
 		HibernateUtil.shutdown();
 
-		App.log.info("*********************************** START main() method " + App.class);
+		App.log.info("*********************************** END main() method " + App.class);
 
 	}
 }
