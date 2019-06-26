@@ -4,6 +4,7 @@ import org.hibernate.Session;
 
 import com.kyiminhan.mm.hibernate.entity.EmployeeEntity;
 import com.kyiminhan.mm.hibernate.utils.DBUtil;
+import com.kyiminhan.mm.hibernate.utils.EntityUtil;
 import com.kyiminhan.mm.hibernate.utils.HibernateUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -36,13 +37,15 @@ public class App {
 		sessionOne.beginTransaction();
 
 		// Create new Employee object
-		final EmployeeEntity emp = EmployeeEntity.builder().firstName("Kyi Min").lastName("Han")
-				.email("kyiminhan@gmail.com").build();
+		final EmployeeEntity emp = EntityUtil.getInstance().createEmpEntity();
 
 		// Save employee
 		sessionOne.save(emp);
+
+		// Hibernate entity manager can produce the id before the persist.
 		// store the employee id generated for future use
 		final Integer empId = emp.getEmployeeId();
+
 		sessionOne.getTransaction().commit();
 
 		/************************************************************************/

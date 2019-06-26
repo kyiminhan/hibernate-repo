@@ -4,6 +4,7 @@ import org.hibernate.Session;
 
 import com.kyiminhan.mm.hibernate.entity.EmployeeEntity;
 import com.kyiminhan.mm.hibernate.utils.DBUtil;
+import com.kyiminhan.mm.hibernate.utils.EntityUtil;
 import com.kyiminhan.mm.hibernate.utils.HibernateUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -37,17 +38,18 @@ public class App_RefreshEntity {
 		sessionOne.beginTransaction();
 
 		// Create new Employee object
-		final EmployeeEntity emp = EmployeeEntity.builder().email("kyiminhan@gmail.com").firstName("Kyi Min")
-				.lastName("Han").build();
+		final EmployeeEntity emp = EntityUtil.getInstance().createEmpEntity();
 
 		// Save employee
-		final int id = (int) sessionOne.save(emp);
+		sessionOne.save(emp);
 		sessionOne.getTransaction().commit();
 		sessionOne.close();
 
+		final Integer genEmpId = emp.getEmployeeId();
+
 		// Verify employee's firstname
-		App_RefreshEntity.log
-				.info("@@@@@ verifyEmployeeFirstName : " + App_RefreshEntity.verifyEmployeeFirstName(id, "Kyi Min"));
+		App_RefreshEntity.log.info(
+				"@@@@@ verifyEmployeeFirstName : " + App_RefreshEntity.verifyEmployeeFirstName(genEmpId, "Kyi Min"));
 
 		final Session sessionTwo = HibernateUtil.getSessionFactory().openSession();
 		sessionTwo.beginTransaction();

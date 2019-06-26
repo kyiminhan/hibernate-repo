@@ -4,6 +4,7 @@ import org.hibernate.Session;
 
 import com.kyiminhan.mm.hibernate.entity.EmployeeEntity;
 import com.kyiminhan.mm.hibernate.utils.DBUtil;
+import com.kyiminhan.mm.hibernate.utils.EntityUtil;
 import com.kyiminhan.mm.hibernate.utils.HibernateUtil;
 
 import lombok.extern.log4j.Log4j2;
@@ -35,8 +36,7 @@ public class App {
 		final Session session = HibernateUtil.getSessionFactory().openSession();
 		session.beginTransaction();
 
-		final EmployeeEntity emp = EmployeeEntity.builder().email("kyiminhan@gmail.com").firstName("Kyi Min ")
-				.lastName("Han").build();
+		final EmployeeEntity emp = EntityUtil.getInstance().createEmpEntity();
 
 		App.log.info("@@@@@@@@@@@@@@@@@@@@ Persist :  " + emp + " @@@@@ " + App.class);
 		session.save(emp);
