@@ -1,4 +1,4 @@
-package com.kyiminhan.mm.hibernate._001.hello_world;
+package com.kyiminhan.mm.hibernate._003.persist;
 
 import org.hibernate.Session;
 
@@ -15,7 +15,7 @@ import lombok.extern.log4j.Log4j2;
  * @version 1.0 <BR>
  * @since Jun 26, 2019 <BR>
  *        hibernate-demo-001-hello-world system <BR>
- *        com.kyiminhan.mm.hibernate._001.hello_world <BR>
+ *        com.kyiminhan.mm.hibernate._003.persist <BR>
  *        App.java <BR>
  */
 @Log4j2
@@ -38,9 +38,12 @@ public class App {
 		final EmployeeEntity emp = EmployeeEntity.builder().email("kyiminhan@gmail.com").firstName("Kyi Min ")
 				.lastName("Han").build();
 
+		App.log.info("@@@@@@@@@@@@@@@@@@@@ Persist :  " + emp + " @@@@@ " + App.class);
 		session.save(emp);
 
 		session.getTransaction().commit();
 		HibernateUtil.shutdown();
+
+		App.log.info("*********************************** END main() method " + App.class);
 	}
 }
